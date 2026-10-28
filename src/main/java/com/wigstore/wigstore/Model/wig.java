@@ -30,6 +30,7 @@ public class Wig {
      @Column(nullable = false)
     private Double densityPercentage;
 
+    //work on a way to notify the user that hairtype cannot be left blank
     @Enumerated(EnumType.STRING)
      @Column(nullable = false)
     private HairType hairType;
@@ -47,6 +48,7 @@ public class Wig {
     private User createdBy;
 
      public Long getId() { return id; }
+
 
     public String getName() { return name; }
    public void setName(String name){this.name= name;}
