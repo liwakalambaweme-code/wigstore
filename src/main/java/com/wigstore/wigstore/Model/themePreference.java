@@ -1,5 +1,5 @@
 package com.wigstore.wigstore.model;
-public enum themePreference {
+public enum ThemePreference {
     
     LIGHT, DARK, SYSTEM
 }

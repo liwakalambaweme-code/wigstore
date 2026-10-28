@@ -1,5 +1,5 @@
 package com.wigstore.wigstore.model;
-public enum notificationType {
+public enum NotificationType {
     NEW_WIG, ORDER_PLACED, PAYMENT_RECEIVED
     
 }

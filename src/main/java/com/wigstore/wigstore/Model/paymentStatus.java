@@ -1,5 +1,5 @@
 
 package com.wigstore.wigstore.model;
-public enum paymentStatus {
+public enum PaymentStatus {
     PENDING, COMPLETED, FAILED
 }

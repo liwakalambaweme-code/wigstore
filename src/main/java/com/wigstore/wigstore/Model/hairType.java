@@ -1,4 +1,4 @@
 package com.wigstore.wigstore.model;
-public enum hairType {
+public enum HairType {
     NATURAL, SYNTHETIC
 }
