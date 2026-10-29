@@ -39,7 +39,7 @@ public class Wig {
     private int stockQuantity;
 
      @Column(nullable = false)
-    private Boolean active = true;
+    private boolean active = true;
 
     private LocalDateTime createdAt = LocalDateTime.now();
 
