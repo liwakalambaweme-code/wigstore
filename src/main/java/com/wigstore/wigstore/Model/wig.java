@@ -1,7 +1,8 @@
 package com.wigstore.wigstore.model;
+
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "wigs")
@@ -14,31 +15,29 @@ public class Wig {
     @Column(nullable = false)
     private String name;
 
-     @Column(nullable = false, length= 1000)
+    @Column(nullable = false, length = 1000)
     private String description;
 
-    @Enumerated(EnumType.STRING)
-     @Column(nullable = false, precision = 10, scale= 2)
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal priceUsd;
 
-     @Column(nullable = false)
+    @Column(nullable = false)
     private String color;
 
-     @Column(nullable = false)
-    private Double lengthInches;
+    @Column(nullable = false)
+    private int lengthInches;
 
-     @Column(nullable = false)
-    private Double densityPercentage;
+    @Column(nullable = false)
+    private int densityPercent;
 
-    //work on a way to notify the user that hairtype cannot be left blank
     @Enumerated(EnumType.STRING)
-     @Column(nullable = false)
-    private HairType hairType;
+    @Column(nullable = false)
+    private HairType hairType;   // no default: the seller must choose
 
-     @Column(nullable = false)
+    @Column(nullable = false)
     private int stockQuantity;
 
-     @Column(nullable = false)
+    @Column(nullable = false)
     private boolean active = true;
 
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -47,40 +46,37 @@ public class Wig {
     @JoinColumn(name = "created_by_id")
     private User createdBy;
 
-     public Long getId() { return id; }
-
+    public Long getId() { return id; }
 
     public String getName() { return name; }
-   public void setName(String name){this.name= name;}
+    public void setName(String name) { this.name = name; }
 
-   public String getDescription(){return description;}
-   public void setDescription(String description){this.description= description;}
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
-   public Currency getCurrency(){return currency;}
-   public void setCurrency(Currency currency){this.currency= curency;}
+    public BigDecimal getPriceUsd() { return priceUsd; }
+    public void setPriceUsd(BigDecimal priceUsd) { this.priceUsd = priceUsd; }
 
-   public String getColor(){return color;}
-   public void setColor(String color){this.color= color;}
+    public String getColor() { return color; }
+    public void setColor(String color) { this.color = color; }
 
-   public Double getLengthInches(){return lengthInches;}
-   public void setLengthInches(Double lengthInches){this.lengthInches= lengthInches;}
+    public int getLengthInches() { return lengthInches; }
+    public void setLengthInches(int lengthInches) { this.lengthInches = lengthInches; }
 
-  public Double getDensityPercentage(){return densityPercentage;}
-  public void setDensityPercentage(Double densityPercentage){this.densityPercentage= densityPercentage;}
+    public int getDensityPercent() { return densityPercent; }
+    public void setDensityPercent(int densityPercent) { this.densityPercent = densityPercent; }
 
-  public HairType getHairType(){return hairType;}
-  public void setHairType( HairType hairType){this.hairType= hairType;}
+    public HairType getHairType() { return hairType; }
+    public void setHairType(HairType hairType) { this.hairType = hairType; }
 
-  public int getStockQuantity(){return stockQuantity;}
-  public void setStockQuantity(int stockQuantity){this.stockQuantity= stockQuantity;}
+    public int getStockQuantity() { return stockQuantity; }
+    public void setStockQuantity(int stockQuantity) { this.stockQuantity = stockQuantity; }
 
-  public Boolean getActive(){return active;}
-  public void setActive(Boolean active){this.active= active;}
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
 
-    public LocalDateTime getCreatedAt(){return createdAt;}
+    public LocalDateTime getCreatedAt() { return createdAt; }
 
-    public User getCreatedBy(){return createdBy;}
-    public void setCreatedBy(User createdBy){this.createdBy= createdBy;}
-
-    
+    public User getCreatedBy() { return createdBy; }
+    public void setCreatedBy(User createdBy) { this.createdBy = createdBy; }
 }
