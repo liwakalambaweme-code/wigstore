@@ -58,7 +58,7 @@ public class WigController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public WigResponse create(@RequestHeader("X-User-Id") Long userId, @RequestBody WigRequest r) {
+    public WigResponse create(@CurrentUserId Long userId, @RequestBody WigRequest r) {
         User seller = userService.getUser(userId);
         return mapper.toWig(wigService.createWig(fromRequest(r), seller), Currency.USD);
     }

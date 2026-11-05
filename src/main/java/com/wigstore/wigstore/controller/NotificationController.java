@@ -22,24 +22,24 @@ public class NotificationController {
     }
 
     @GetMapping
-    public List<NotificationResponse> mine(@RequestHeader("X-User-Id") Long userId) {
+    public List<NotificationResponse> mine(@CurrentUserId Long userId) {
         return notificationService.getForUser(userId).stream().map(mapper::toNotification).toList();
     }
 
     @GetMapping("/unread-count")
-    public Map<String, Long> unread(@RequestHeader("X-User-Id") Long userId) {
+    public Map<String, Long> unread(@CurrentUserId Long userId) {
         return Map.of("unread", notificationService.unreadCount(userId));
     }
 
     @PutMapping("/{id}/seen")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void seen(@RequestHeader("X-User-Id") Long userId, @PathVariable Long id) {
+    public void seen(@CurrentUserId Long userId, @PathVariable Long id) {
         notificationService.markSeen(id, userId);
     }
 
     @PutMapping("/seen-all")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void seenAll(@RequestHeader("X-User-Id") Long userId) {
+    public void seenAll(@CurrentUserId Long userId) {
         notificationService.markAllSeen(userId);
     }
 }

@@ -1,5 +1,5 @@
 package com.wigstore.wigstore.service;
-
+import java.util.List;
 import com.wigstore.wigstore.model.*;
 import com.wigstore.wigstore.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +15,9 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+    public List<User> listAll() {
+    return userRepository.findAll();
+}
 
     @Transactional
     public User register(String name, String email, String phoneNumber,

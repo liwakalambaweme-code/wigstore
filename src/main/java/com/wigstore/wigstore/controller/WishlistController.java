@@ -22,7 +22,7 @@ public class WishlistController {
     }
 
     @GetMapping
-    public List<WigResponse> get(@RequestHeader("X-User-Id") Long userId,
+    public List<WigResponse> get(@CurrentUserId Long userId,
                                  @RequestParam(defaultValue = "USD") Currency currency) {
         return wishlistService.getWishlist(userId).stream()
                 .map(item -> mapper.toWig(item.getWig(), currency)).toList();
@@ -30,13 +30,13 @@ public class WishlistController {
 
     @PostMapping("/{wigId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void add(@RequestHeader("X-User-Id") Long userId, @PathVariable Long wigId) {
+    public void add(@CurrentUserId Long userId, @PathVariable Long wigId) {
         wishlistService.addToWishlist(userId, wigId);
     }
 
     @DeleteMapping("/{wigId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void remove(@RequestHeader("X-User-Id") Long userId, @PathVariable Long wigId) {
+    public void remove(@CurrentUserId Long userId, @PathVariable Long wigId) {
         wishlistService.removeFromWishlist(userId, wigId);
     }
 }

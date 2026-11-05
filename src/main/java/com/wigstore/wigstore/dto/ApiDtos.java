@@ -62,4 +62,5 @@ public final class ApiDtos {
     public record NotificationResponse(Long id, NotificationType type, String message,
                                        boolean seen, LocalDateTime createdAt) {}
     public record RateRequest(BigDecimal usdToZmw) {}
+    public record AuthResponse(String token, UserResponse user) {}
 }

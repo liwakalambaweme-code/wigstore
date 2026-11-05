@@ -21,32 +21,32 @@ public class CartController {
     }
 
     @GetMapping
-    public List<CartItemResponse> get(@RequestHeader("X-User-Id") Long userId) {
+    public List<CartItemResponse> get(@CurrentUserId Long userId) {
         return cartService.getCart(userId).stream().map(mapper::toCartItem).toList();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CartItemResponse add(@RequestHeader("X-User-Id") Long userId,
+    public CartItemResponse add(@CurrentUserId Long userId,
                                 @RequestBody AddToCartRequest r) {
         return mapper.toCartItem(cartService.addToCart(userId, r.wigId(), r.quantity()));
     }
 
     @PutMapping("/{wigId}")
-    public void setQuantity(@RequestHeader("X-User-Id") Long userId,
+    public void setQuantity(@CurrentUserId Long userId,
                             @PathVariable Long wigId, @RequestBody QuantityRequest r) {
         cartService.updateQuantity(userId, wigId, r.quantity());
     }
 
     @DeleteMapping("/{wigId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void remove(@RequestHeader("X-User-Id") Long userId, @PathVariable Long wigId) {
+    public void remove(@CurrentUserId Long userId, @PathVariable Long wigId) {
         cartService.removeFromCart(userId, wigId);
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void clear(@RequestHeader("X-User-Id") Long userId) {
+    public void clear(@CurrentUserId Long userId) {
         cartService.clearCart(userId);
     }
 }

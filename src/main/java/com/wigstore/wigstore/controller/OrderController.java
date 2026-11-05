@@ -24,24 +24,24 @@ public class OrderController {
     // checkout: turns the customer's cart into an order
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderResponse checkout(@RequestHeader("X-User-Id") Long userId,
+    public OrderResponse checkout(@CurrentUserId Long userId,
                                   @RequestBody CheckoutRequest r) {
         return mapper.toOrder(orderService.placeOrder(
                 userId, r.deliveryAddress(), r.city(), r.deliveryNotes()));
     }
 
     @GetMapping
-    public List<OrderResponse> mine(@RequestHeader("X-User-Id") Long userId) {
+    public List<OrderResponse> mine(@CurrentUserId Long userId) {
         return orderService.getOrdersForCustomer(userId).stream().map(mapper::toOrder).toList();
     }
 
     @GetMapping("/{id}")
-    public OrderResponse one(@RequestHeader("X-User-Id") Long userId, @PathVariable Long id) {
+    public OrderResponse one(@CurrentUserId Long userId, @PathVariable Long id) {
         return mapper.toOrder(orderService.getOrderForCustomer(id, userId));
     }
 
     @PutMapping("/{id}/cancel")
-    public OrderResponse cancel(@RequestHeader("X-User-Id") Long userId, @PathVariable Long id) {
+    public OrderResponse cancel(@CurrentUserId Long userId, @PathVariable Long id) {
         return mapper.toOrder(orderService.cancelOwnOrder(id, userId));
     }
 
