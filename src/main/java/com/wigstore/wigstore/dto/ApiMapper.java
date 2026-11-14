@@ -49,14 +49,20 @@ public class ApiMapper {
                 c.getQuantity(), coverUrl(images));
     }
 
-    public OrderResponse toOrder(Order o) {
+    public OrderResponse toOrder(Order o) { return toOrder(o, false); }
+
+    // only the response to the guest who just placed the order carries the secret token
+    public OrderResponse toGuestOrder(Order o) { return toOrder(o, true); }
+
+    private OrderResponse toOrder(Order o, boolean withToken) {
         List<OrderItemResponse> items = o.getItems().stream()
                 .map(i -> new OrderItemResponse(i.getWig().getId(), i.getWig().getName(),
                         i.getQuantity(), i.getUnitPriceUsd()))
                 .toList();
         return new OrderResponse(o.getId(), o.getStatus(), o.getTotalUsd(), o.getCreatedAt(),
                 o.getDeliveryAddress(), o.getCity(), o.getDeliveryNotes(),
-                o.getCustomer().getName(), items);
+                o.contactName(), o.contactEmail(), o.contactPhone(),
+                withToken ? o.getGuestToken() : null, items);
     }
 
     public PaymentResponse toPayment(Payment p) {

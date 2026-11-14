@@ -42,13 +42,23 @@ public final class ApiDtos {
 
     // orders
     public record CheckoutRequest(String deliveryAddress, String city, String deliveryNotes) {}
+    public record OrderLineRequest(Long wigId, int quantity) {}
+    public record DirectCheckoutRequest(List<OrderLineRequest> items, String deliveryAddress,
+                                        String city, String deliveryNotes) {}
+    public record GuestCheckoutRequest(String name, String email, String phone,
+                                       List<OrderLineRequest> items, String deliveryAddress,
+                                       String city, String deliveryNotes) {}
+    public record GuestPayRequest(String token, PaymentMethod method, Currency currency,
+                                  String payerPhone) {}
+    public record SubscribeRequest(String email, String name) {}
     public record StatusRequest(OrderStatus status) {}
     public record OrderItemResponse(Long wigId, String wigName, int quantity,
                                     BigDecimal unitPriceUsd) {}
     public record OrderResponse(Long id, OrderStatus status, BigDecimal totalUsd,
                                 LocalDateTime createdAt, String deliveryAddress,
                                 String city, String deliveryNotes, String customerName,
-                                List<OrderItemResponse> items) {}
+                                String customerEmail, String customerPhone,
+                                String guestToken, List<OrderItemResponse> items) {}
 
     // payments
     public record PayRequest(PaymentMethod method, Currency currency, String payerPhone) {}

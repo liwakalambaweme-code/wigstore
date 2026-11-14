@@ -28,8 +28,14 @@ public class Order {
     private String deliveryNotes;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "customer_id")          // empty for a guest order
     private User customer;
+
+    // guest checkout: no account, so we keep the contact details on the order itself
+    private String guestName;
+    private String guestEmail;
+    private String guestPhone;
+    private String guestToken;                  // secret that lets a guest see/pay only their own order
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> items = new ArrayList<>();
@@ -55,6 +61,23 @@ public class Order {
 
     public User getCustomer() { return customer; }
     public void setCustomer(User customer) { this.customer = customer; }
+
+    public String getGuestName() { return guestName; }
+    public void setGuestName(String guestName) { this.guestName = guestName; }
+
+    public String getGuestEmail() { return guestEmail; }
+    public void setGuestEmail(String guestEmail) { this.guestEmail = guestEmail; }
+
+    public String getGuestPhone() { return guestPhone; }
+    public void setGuestPhone(String guestPhone) { this.guestPhone = guestPhone; }
+
+    public String getGuestToken() { return guestToken; }
+    public void setGuestToken(String guestToken) { this.guestToken = guestToken; }
+
+    // who gets the receipt: the account's email, or the guest's
+    public String contactEmail() { return customer != null ? customer.getEmail() : guestEmail; }
+    public String contactName() { return customer != null ? customer.getName() : guestName; }
+    public String contactPhone() { return customer != null ? customer.getPhoneNumber() : guestPhone; }
 
     public List<OrderItem> getItems() { return items; }
 }

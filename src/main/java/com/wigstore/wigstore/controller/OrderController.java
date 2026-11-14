@@ -30,6 +30,15 @@ public class OrderController {
                 userId, r.deliveryAddress(), r.city(), r.deliveryNotes()));
     }
 
+    // checkout with the cart held in the browser
+    @PostMapping("/direct")
+    @ResponseStatus(HttpStatus.CREATED)
+    public OrderResponse checkoutDirect(@CurrentUserId Long userId,
+                                        @RequestBody DirectCheckoutRequest r) {
+        return mapper.toOrder(orderService.placeOrderForUser(
+                userId, r.items(), r.deliveryAddress(), r.city(), r.deliveryNotes()));
+    }
+
     @GetMapping
     public List<OrderResponse> mine(@CurrentUserId Long userId) {
         return orderService.getOrdersForCustomer(userId).stream().map(mapper::toOrder).toList();

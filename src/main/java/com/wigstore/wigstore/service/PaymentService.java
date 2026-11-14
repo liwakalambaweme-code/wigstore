@@ -47,9 +47,27 @@ public class PaymentService {
                                 Currency currency, String payerPhone) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new IllegalArgumentException("Order not found"));
-        if (!order.getCustomer().getId().equals(userId)) {
+        if (order.getCustomer() == null || !order.getCustomer().getId().equals(userId)) {
             throw new IllegalArgumentException("Order not found");
         }
+        return payOrder(order, method, currency, payerPhone);
+    }
+
+    // a guest proves it is their order with the secret token they got at checkout
+    @Transactional
+    public Payment startGuestPayment(Long orderId, String token, PaymentMethod method,
+                                     Currency currency, String payerPhone) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Order not found"));
+        if (order.getGuestToken() == null || !order.getGuestToken().equals(token)) {
+            throw new IllegalArgumentException("Order not found");
+        }
+        return payOrder(order, method, currency, payerPhone);
+    }
+
+    private Payment payOrder(Order order, PaymentMethod method,
+                             Currency currency, String payerPhone) {
+        Long orderId = order.getId();
         if (order.getStatus() != OrderStatus.PENDING) {
             throw new IllegalArgumentException("This order cannot be paid");
         }

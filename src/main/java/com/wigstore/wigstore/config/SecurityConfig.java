@@ -41,6 +41,8 @@ public class SecurityConfig {
                 .requestMatchers("/uploads/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/auth/register", "/api/auth/login").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/exchange-rate").permitAll()
+                .requestMatchers("/api/guest/**").permitAll()          // checkout without an account
+                .requestMatchers(HttpMethod.POST, "/api/subscribe").permitAll()
 
                 // seller and admin read-only views (before the public catalogue rule)
                 .requestMatchers(HttpMethod.GET, "/api/wigs/manage", "/api/orders/manage")
